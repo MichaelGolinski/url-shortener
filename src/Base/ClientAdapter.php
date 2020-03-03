@@ -61,6 +61,7 @@ class ClientAdapter implements ClientInterface
     {
         if ($verb == 'post') {
             $data = json_encode(['long_url' => urldecode($parameters['longUrl'])]);
+            
             $curl = curl_init();
             curl_setopt_array($curl, array(
                 CURLOPT_URL => $url,
@@ -71,13 +72,13 @@ class ClientAdapter implements ClientInterface
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POST => 1,
                 CURLOPT_POSTFIELDS =>$data,
                 CURLOPT_HTTPHEADER => array(
                     "Content-Type: application/json",
                     "Authorization: Bearer ".$parameters['access_token']
                 ),
             ));
-
             $response = curl_exec($curl);
             $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
