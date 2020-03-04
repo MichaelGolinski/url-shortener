@@ -41,7 +41,8 @@ trait ValidatorTrait
      */
     public function validateResponseCode($code)
     {
-        if (!$code || $code != '200') {
+        $successCodes = ['200','201']
+        if (!$code || !in_array($code,$successCodes)) {
             throw new ResponseErrorException("Response is not OK! Response code = $code");
         }
     }
